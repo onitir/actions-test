@@ -4,32 +4,16 @@ on:
   workflow_dispatch:  # Manual trigger
 
 env:
-  AWS_REGION: us-east-1  # Change to reflect your Region
+  AWS_REGION: us-east-1 
 
 permissions:
       id-token: write   # Required for OIDC authentication
-      contents: read    # Required for actions/checkout
+      contents: read  
 
 jobs:
   ListS3Buckets:
     runs-on: ubuntu-latest
     steps:
-      - name: Git clone the repository
-        uses: actions/checkout@v3
-        
-      - name: Debug GitHub Context
-        run: |
-          echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
-          echo "GITHUB_REF: $GITHUB_REF"
-          echo "GITHUB_SHA: $GITHUB_SHA"
-          echo "Full GitHub Context:"
-          echo '${{ toJSON(github) }}' | jq '.'
-
-      - name: Debug GitHub context
-        run: |
-          echo "Repository: ${{ github.repository }}"
-          echo "Repository owner: ${{ github.repository_owner }}"
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
@@ -43,8 +27,4 @@ jobs:
 
       - name: List S3 Buckets
         run: |
-          aws s3 ls
-          # For specific bucket:
-          # aws s3 ls s3://your-bucket-name/
-          # For recursive listing:
-          # aws s3 ls s3://your-bucket-name/ --recursive
+          aws s3 lS
