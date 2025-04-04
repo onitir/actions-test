@@ -17,12 +17,13 @@ jobs:
       - name: Git clone the repository
         uses: actions/checkout@v3
         
-      - name: Debug Token Claims
+      - name: Debug GitHub Context
         run: |
-          curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL" | jq
-        env:
-          ACTIONS_ID_TOKEN_REQUEST_TOKEN: ${{ env.ACTIONS_ID_TOKEN_REQUEST_TOKEN }}
-          ACTIONS_ID_TOKEN_REQUEST_URL: ${{ env.ACTIONS_ID_TOKEN_REQUEST_URL }}
+          echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
+          echo "GITHUB_REF: $GITHUB_REF"
+          echo "GITHUB_SHA: $GITHUB_SHA"
+          echo "Full GitHub Context:"
+          echo '${{ toJSON(github) }}' | jq '.'
 
       - name: Debug GitHub context
         run: |
